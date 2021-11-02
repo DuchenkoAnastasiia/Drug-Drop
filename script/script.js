@@ -1,8 +1,13 @@
 const add = document.querySelector('body');
-const div = document.querySelector('div');
 
 const arr_Stickers = new Array ("./css/stickers/1.png", "./css/stickers/2.png", "./css/stickers/3.png", "./css/stickers/4.png", "./css/stickers/5.png",
 "./css/stickers/6.png", "./css/stickers/7.png", "./css/stickers/8.png", "./css/stickers/9.png", "./css/stickers/10.png");
+
+const dragHandler = function(e){
+    console.log('play');
+   
+   
+} 
 
 function add_Sticker(){
     let random_Sticker = Math.floor(Math.random() * arr_Stickers.length);
@@ -13,7 +18,19 @@ function add_Sticker(){
     const add_Butt_Input = document.createElement('button');
     add_Butt_Input.innerHTML = `<img src=./css/check.png>`
     const add_Butt = document.createElement('button');
-    add_Butt_Input.addEventListener('click', )
+    // add_Butt_Input.addEventListener('click', )
+
+    add_Img.addEventListener('mousedown', () => {
+        console.log('op');
+        document.addEventListener('mousemove', dragHandler)
+
+        document.addEventListener('mouseup', () => {
+            document.removeEventListener('mousemove', dragHandler)
+            console.log('up');
+        })
+       
+    })
+
     add_Butt.addEventListener('click', () =>{
         add_Div.remove();
     })
@@ -25,19 +42,60 @@ function add_Sticker(){
 
 }
 
+
+
 add.addEventListener('click',  e => {
     if(e.target == add){
         const [sticker, url] =  add_Sticker(); 
-        console.log(sticker, url);
+        // console.log(sticker, url);
         sticker.style.top = e.offsetY + 'px';
         sticker.style.left = e.offsetX + 'px'; 
     }
+
 });
 
 
 
-const input = document.querySelector('input');
- {
-   
-    
-}
+
+
+
+
+
+// drug.onmousedown = function(e){
+//     console.log(drug);
+
+//     let coords = getCoords(drug);
+//     let shiftX = e.pageX - coords.left;
+//     let shiftY = e.pageY - coords.top;
+
+//     drug.style.position = 'absolute';
+//     moveAt(e);
+//     document.body.appendChild(drug);
+//     drug.style.zIndex = 1000;
+
+//     function moveAt(e){
+//         drug.style.left = e.pageX - shiftX + 'px';
+//         drug.style.top = e.pageY - shiftY + 'px';
+//     }
+
+//     document.onmousemove = function(e) {
+//         moveAt(e);
+//     }
+
+//     drug.onmouseup = function(){
+//         document.onmousemove = null;
+//         drug.onmouseup = null;
+//     }
+// }
+
+// drug.ondragstart = function() {
+//     return false;
+//   };
+
+//   function getCoords(elem) {
+//     let box = elem.getBoundingClientRect();
+//     return {
+//       top: box.top + pageYOffset,
+//       left: box.left + pageXOffset
+//     };
+// }
