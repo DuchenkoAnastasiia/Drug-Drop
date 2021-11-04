@@ -3,12 +3,6 @@ const add = document.querySelector('body');
 const arr_Stickers = new Array ("./css/stickers/1.png", "./css/stickers/2.png", "./css/stickers/3.png", "./css/stickers/4.png", "./css/stickers/5.png",
 "./css/stickers/6.png", "./css/stickers/7.png", "./css/stickers/8.png", "./css/stickers/9.png", "./css/stickers/10.png");
 
-const dragHandler = function(e){
-    console.log('play');
-   
-   
-} 
-
 function add_Sticker(){
     let random_Sticker = Math.floor(Math.random() * arr_Stickers.length);
     const add_Div = document.createElement('div');
@@ -20,28 +14,34 @@ function add_Sticker(){
     const add_Butt = document.createElement('button');
     // add_Butt_Input.addEventListener('click', )
 
-    add_Img.addEventListener('mousedown', () => {
-        console.log('op');
-        document.addEventListener('mousemove', dragHandler)
-
-        document.addEventListener('mouseup', () => {
-            document.removeEventListener('mousemove', dragHandler)
-            console.log('up');
-        })
-       
-    })
-
     add_Butt.addEventListener('click', () =>{
         add_Div.remove();
     })
     add_Butt.innerHTML = `<img src=./css/close.png>`
     add_Div.append(add_Img,add_Input,add_Butt,add_Butt_Input);
     add.append(add_Div);
+
+    add_Div.onmousedown = function(e) {
+        moveAt(e, add_Div)
+        document.onmousemove = function(e) {
+            moveAt(e, add_Div);
+          }
+    }
+
+    add_Div.onmouseup = function(e) {
+        document.onmousemove = null;
+      }
+      add_Div.ondragstart = function() {
+        return false;
+      }
     return [add_Div, arr_Stickers[random_Sticker]];
-
-
 }
 
+
+function moveAt(e, card) {
+    card.style.left = e.pageX - card.offsetWidth / 2 + 'px';
+    card.style.top = e.pageY - card.offsetHeight / 2 + 'px';
+  }
 
 
 add.addEventListener('click',  e => {
@@ -54,48 +54,3 @@ add.addEventListener('click',  e => {
 
 });
 
-
-
-
-
-
-
-
-// drug.onmousedown = function(e){
-//     console.log(drug);
-
-//     let coords = getCoords(drug);
-//     let shiftX = e.pageX - coords.left;
-//     let shiftY = e.pageY - coords.top;
-
-//     drug.style.position = 'absolute';
-//     moveAt(e);
-//     document.body.appendChild(drug);
-//     drug.style.zIndex = 1000;
-
-//     function moveAt(e){
-//         drug.style.left = e.pageX - shiftX + 'px';
-//         drug.style.top = e.pageY - shiftY + 'px';
-//     }
-
-//     document.onmousemove = function(e) {
-//         moveAt(e);
-//     }
-
-//     drug.onmouseup = function(){
-//         document.onmousemove = null;
-//         drug.onmouseup = null;
-//     }
-// }
-
-// drug.ondragstart = function() {
-//     return false;
-//   };
-
-//   function getCoords(elem) {
-//     let box = elem.getBoundingClientRect();
-//     return {
-//       top: box.top + pageYOffset,
-//       left: box.left + pageXOffset
-//     };
-// }
